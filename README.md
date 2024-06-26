@@ -18,6 +18,7 @@ gen_emb.py script to hook the model and get the activation vector.
 
 ### Stable diffusion
 #### text_encoder
+```
 CLIPTextModel(
   (text_model): CLIPTextTransformer(
     (embeddings): CLIPTextEmbeddings(
@@ -46,6 +47,7 @@ CLIPTextModel(
     (final_layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
   )
 )
+```
 
 #### vision safe_checker
 #### feature_extractor
