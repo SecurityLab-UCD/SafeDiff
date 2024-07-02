@@ -1,4 +1,4 @@
-from diffusers import AutoPipelineForText2Image
+from diffusers import AutoPipelineForText2Image, DiffusionPipeline
 import pandas as pd
 import argparse
 import os
@@ -27,10 +27,11 @@ def main():
     parser.add_argument("--dataset_names", default='i2p_benchmark')
     args = parser.parse_args()
     dataset = load_data(args.dataset_path,args.dataset_names)
-    pipeline = AutoPipelineForText2Image.from_pretrained("runwayml/stable-diffusion-v1-5", torch_dtype=torch.float16, variant="fp16", requires_safety_checker=True).to("cuda")
+    pipeline = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-1-base", torch_dtype=torch.float16, variant="fp16", requires_safety_checker=True).to("cuda")
+    
     for i in range(len(dataset['prompt'])):
         image = pipeline(dataset['prompt'][i]).images[0]
-        image.save(os.path.join("./gen_img",f"{i}.jpg"))
+        image.save(os.path.join("./gen_img/stablediffusion2.1",f"{i}.jpg"))
 
 if __name__ == "__main__":
     main()
