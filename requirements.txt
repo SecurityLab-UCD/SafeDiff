@@ -1,0 +1,10 @@
+torch==2.3.1
+numpy==1.26.4
+transformers==4.42.4
+pandas==2.2.2
+diffusers==0.29.2
+scikit-learn==1.5.1
+matplotlib==3.9.1
+matplotlib-inline==0.1.7
+seaborn==0.13.2
+accelerate==0.32.1
