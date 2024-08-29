@@ -8,7 +8,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-device='cuda'
 stable_diffusion_src_path = "CompVis/stable-diffusion-v1-4"
 
 
@@ -18,6 +17,8 @@ def parse_args():
             description='Run SLD on chosen datasets')
     parser.add_argument('--dataset', required=True)
     parser.add_argument('--output', default='./sld_results')
+    parser.add_argument('--start_at', help='Set the case number to start at', default=0)
+    parser.add_argument('--device', help='Torch device the model is run on', default="cuda")
 
     args = parser.parse_args()
     return args
@@ -27,7 +28,7 @@ def load_model():
     pipe = SLDPipeline.from_pretrained(
         stable_diffusion_src_path,
         safety_checker=None,
-    ).to(device)
+    ).to(args.device)
     
     logger.info("Loaded pipeline. Current safety concepts are:")
     logger.info(pipe.safety_concept)
@@ -43,10 +44,10 @@ if __name__ == "__main__":
     logger.info(dataset)
 
     pipe = load_model()
-    gen = torch.Generator(device)
+    gen = torch.Generator(args.device)
     num_images = 3
     logger.info("Generating images")
-    for index in tqdm(range(dataset.shape[0])):
+    for index in tqdm(range(args.start_at, dataset.shape[0])):
         entry = dataset.loc[index]
 
         gen.manual_seed(int(entry.evaluation_seed))
