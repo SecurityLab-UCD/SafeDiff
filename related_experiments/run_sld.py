@@ -9,6 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 stable_diffusion_src_path = "CompVis/stable-diffusion-v1-4"
+num_images = 3
+sld_hyperparams = {
+    "guidance_scale": 7.5,
+    "num_inference_steps": 25,
+}
 
 
 def parse_args():
@@ -45,7 +50,6 @@ if __name__ == "__main__":
 
     pipe = load_model()
     gen = torch.Generator(args.device)
-    num_images = 3
     logger.info("Generating images")
     for index in tqdm(range(args.start_at, dataset.shape[0])):
         entry = dataset.loc[index]
@@ -55,8 +59,7 @@ if __name__ == "__main__":
                 prompt=entry.prompt,
                 generator=gen,
                 num_images_per_prompt=num_images,
-                guidance_scale=7.5,
-                num_inference_steps=25,
+                **sld_hyperparams
             ).images
 
         for img_num in range(num_images):
