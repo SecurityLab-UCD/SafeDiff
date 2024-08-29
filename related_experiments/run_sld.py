@@ -11,9 +11,11 @@ logger = logging.getLogger(__name__)
 stable_diffusion_src_path = "CompVis/stable-diffusion-v1-4"
 num_images = 3
 sld_hyperparams = {
-    "guidance_scale": 7.5,
-    "num_inference_steps": 25,
-}
+        "height": 512,
+        "width": 512,
+        "guidance_scale": 7.5,
+        "num_inference_steps": 25,
+    }
 
 
 def parse_args():
@@ -63,5 +65,5 @@ if __name__ == "__main__":
             ).images
 
         for img_num in range(num_images):
-            outname = f"{args.output}/{entry.case_number}_{img_num}.png"
+            outname = f"{args.output}/{entry.case_number}_{img_num}.jpg"
             images[img_num].save(outname)
