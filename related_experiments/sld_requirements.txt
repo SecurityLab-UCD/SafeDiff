@@ -1,1 +1,3 @@
+pandas
 sld @ git+https://github.com/ml-research/safe-latent-diffusion.git@a42923c3de0e4346bee3f61891a510bdcc2aedd2
+diffusers==0.16
