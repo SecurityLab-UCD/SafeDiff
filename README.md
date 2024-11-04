@@ -1,22 +1,42 @@
 # SafeDiff
 Defense prompt jailbreak to diffusion models
 
+## Dataset Setup
+The datasets used in our experiments are located in the `dataset/` directory.
 
-## Model selection
-1. stable diffusion
-2. DALL-E mini
-3. TBD
+- `./dataset/nsfw`: Contains a set of jailbreak prompt datasets.
+- `./dataset/sfw`: Contains a set of safe prompt datasets.
 
-## Structure
-/dataset/i2p_benchmark.csv is a jailbreak prompt dataset. You can find all corresponding generated images under my path.
+## Model Setup
+The models used in our experiments are stored in the `model/` directory. You can also create and debug your own models using the following scripts:
 
-gen_img.py script to generate image by diffusion model.
+- `./harm_iden.ipynb`: Used to develop and train the identification model.
+- `./harm_removal.ipynb`: Used to build and fine-tune the steered model.
 
-gen_emb.py script to hook the model and get the activation vector.
+## Generate Images
+To generate images, use the following scripts:
+
+- `./SD_gen_img.py`: Implements the Stable Diffusion 1.4 pipeline for image generation.
+- `./SLD_gen_img.py`: Implements the SLD pipeline for image generation. Refer to [Safe Latent Diffusion (SLD)](https://github.com/ml-research/safe-latent-diffusion).
+- `./harm_removal_pip.py`: Implements the SteerDiff pipeline for image generation.
+
+## Evaluation
+To evaluate the results of the generated images, we apply both **NudeNet** and **Q16**.
+
+- `./nudenet_iden.ipynb`: Provides detailed experimental results using NudeNet.
+- `./data`: Contains visualization data for analysis.
+
+## Acknowledgement
+This project utilizes and is inspired by the following resources:
+
+- **NudeNet**: [https://github.com/notAI-tech/NudeNet](https://github.com/notAI-tech/NudeNet)
+- **ESD**: [https://erasing.baulab.info/](https://erasing.baulab.info/)
+- **SLD**: [https://github.com/ml-research/safe-latent-diffusion](https://github.com/ml-research/safe-latent-diffusion)
+- **Q16**: [https://github.com/ml-research/Q16](https://github.com/ml-research/Q16)
 
 ## Model architecture
 
-### Stable diffusion
+### Stable diffusion v1.4
 #### text_encoder
 ```
 CLIPTextModel(
@@ -48,9 +68,3 @@ CLIPTextModel(
   )
 )
 ```
-
-#### vision safe_checker
-#### feature_extractor
-#### scheduler
-#### unet
-#### vae
